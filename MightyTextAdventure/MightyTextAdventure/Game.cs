@@ -10,6 +10,7 @@ public class Game
 
     private readonly Input _input;
     private readonly Display _display;
+    public Player CurrentPlayer;
     
     
 
@@ -23,16 +24,18 @@ public class Game
     public void Init()
     {
         LoadArea();
-        CreatePlayer();
+        CurrentPlayer = CreatePlayer();
+        Console.WriteLine($"{CurrentPlayer.Name} was created!");
+        Console.WriteLine(CurrentPlayer.Description);
         _display.PrintMessage("Start Area");
     }
     
     //create player
-    public void CreatePlayer()
+    public Player CreatePlayer()
     {
         Console.Write("Enter the name of your hero: ");
         Player player = new Player(_input.GetInputFromUser(), _areas[0]);
-        Console.WriteLine($"{player.Name} was created!");
+        return player;
     }
 
     public void GoTo()
@@ -47,10 +50,17 @@ public class Game
         _areas[2] = new Area("Lake");
         _areas[3] = new Area("Desert");
         _areas[4] = new Area("Mountain");
-
-        Area starterArea = _areas[0]; //connected to 4 areas, chose area togo, character creation only for the first time, back after fights for item
-        // common areas => chose to fight or go back to town after win area empty connected to town//
-
+    
+        _areas[0].ConnectedAreas.Add(_areas[1]);
+        _areas[0].ConnectedAreas.Add(_areas[2]);
+        _areas[0].ConnectedAreas.Add(_areas[3]);
+        _areas[0].ConnectedAreas.Add(_areas[4]);
+        
+        _areas[1].ConnectedAreas.Add(_areas[0]);
+        _areas[2].ConnectedAreas.Add(_areas[0]);
+        _areas[3].ConnectedAreas.Add(_areas[0]);
+        _areas[4].ConnectedAreas.Add(_areas[0]);
+        
     }
     
 }
