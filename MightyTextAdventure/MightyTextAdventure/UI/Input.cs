@@ -4,6 +4,7 @@ public class Input
 {
     public String GetInputFromUser()
     {
-        return "";
+        string input = Console.ReadLine();
+        return input;
     }
 }
