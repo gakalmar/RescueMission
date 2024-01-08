@@ -7,12 +7,9 @@ namespace MightyTextAdventure;
 public class Game
 {
     private readonly Area[] _areas;
-
     private readonly Input _input;
     private readonly Display _display;
     public Player CurrentPlayer;
-    
-    
 
     public Game()
     {
@@ -39,7 +36,33 @@ public class Game
     }
 
     public void GoTo()
-    {
+    { 
+        Console.WriteLine($"Where do you want to go next?");
+        foreach (var area in CurrentPlayer.CurrentArea.ConnectedAreas)
+        { 
+            Console.WriteLine($"{area.Description}");
+        }
+        string input = _input.GetInputFromUser();
+
+        bool newAreaFound = false;
+        
+        foreach (var area in CurrentPlayer.CurrentArea.ConnectedAreas)
+        { 
+            if (area.Description.ToLower() == input.ToLower())
+            {
+                    CurrentPlayer.CurrentArea = area;
+                    newAreaFound = true;
+                    Console.WriteLine($"You went to the {CurrentPlayer.CurrentArea.Description}");
+            }
+        }
+
+        if (!newAreaFound)
+        {
+            Console.WriteLine("Invalid location, please type again.");
+            GoTo();
+        }
+        
+        
         
     }
 
