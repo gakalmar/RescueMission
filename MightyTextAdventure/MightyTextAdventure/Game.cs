@@ -10,12 +10,14 @@ public class Game
     private readonly Input _input;
     private readonly Display _display;
     public Player CurrentPlayer;
+    public bool GameEnded { get; set; }
 
     public Game()
     {
         _areas = new Area[5];
         _input = new Input();
         _display = new Display();
+        GameEnded = false;
     }
 
     public void Init()
@@ -23,7 +25,9 @@ public class Game
         LoadArea();
         CurrentPlayer = CreatePlayer();
         Console.WriteLine($"{CurrentPlayer.Name} was created!");
-        Console.WriteLine(CurrentPlayer.Description);
+        Console.ReadLine();
+        Console.WriteLine(CurrentPlayer.Description);       // Update and add it to intro text
+        Console.ReadLine();
         _display.PrintMessage("Start Area");
     }
     
@@ -57,33 +61,40 @@ public class Game
         if (!newAreaFound)
         {
             Console.WriteLine("Invalid location, please type again.");
+            Console.ReadLine();
             Travel();
         }
+    }
+
+    public void Interact(Player player)
+    {
+        player.CurrentArea.Interaction(player);
         
-        // foreach (var area in CurrentPlayer.CurrentArea.ConnectedAreas)
-        // { 
-        //     if (area.Description.ToLower() == input.ToLower())
-        //     {
-        //             CurrentPlayer.CurrentArea = area;
-        //             newAreaFound = true;
-        //             Console.WriteLine($"You went to the {CurrentPlayer.CurrentArea.Description}");
-        //     }
-        // }
-        //
-        // if (!newAreaFound)
-        // {
-        //     Console.WriteLine("Invalid location, please type again.");
-        //     Travel();
-        // }
+        if (player.Inventory.Count > 0)
+        {
+            foreach (var item in player.Inventory)
+            {
+                Console.WriteLine(item);
+            }
+        }
+    }
+
+    public void HandleGameEnd()
+    {
+        // if won
+        //      Do this
+        // if lost
+        //      Do this
     }
 
     private void LoadArea()
     {
-        _areas[0] = new Town("Meadowbrook");
-        _areas[1] = new Ruins("Ravenrock Ruins");
-        _areas[2] = new Lagoon("Lavender Lagoon");
-        _areas[3] = new Woods("Whispering Woods");
-        _areas[4] = new Mountains("Mystic Mountains");
+        // Input inp = new Input();
+        _areas[0] = new Town("Meadowbrook", _input);
+        _areas[1] = new Ruins("Ravenrock Ruins", _input);
+        _areas[2] = new Lagoon("Lavender Lagoon", _input);
+        _areas[3] = new Woods("Whispering Woods", _input);
+        _areas[4] = new Mountains("Mystic Mountains", _input);
     
         _areas[0].ConnectedAreas.Add(_areas[1]);
         _areas[0].ConnectedAreas.Add(_areas[2]);
@@ -94,14 +105,6 @@ public class Game
         _areas[2].ConnectedAreas.Add(_areas[0]);
         _areas[3].ConnectedAreas.Add(_areas[0]);
         _areas[4].ConnectedAreas.Add(_areas[0]);
-        
-        // Console.WriteLine(_areas[1].Description);
-        // _areas[0].Interaction();
-        // _areas[1].Interaction();
-        // _areas[2].Interaction();
-        // _areas[3].Interaction();
-        // _areas[4].Interaction();
-        
     }
     
 }
