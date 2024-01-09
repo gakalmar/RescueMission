@@ -1,19 +1,15 @@
 ﻿namespace MightyTextAdventure.Data.Places;
 
-public class Area
+public abstract class Area
 {
-    public string Description { get; }
-    
+    public string Description { get; set; }
     public List<Area> ConnectedAreas { get; set; }
-    public void Interaction()
+
+    public virtual void Interaction()
     {
-        //solve puzzle , fight
     }
 
-    public Area(string description)
+    public Area()
     {
-        Description = description;
-        ConnectedAreas = new List<Area>();
-
     }
 }
