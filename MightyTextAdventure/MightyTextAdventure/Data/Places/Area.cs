@@ -8,7 +8,7 @@ public abstract class Area
     public List<Area> ConnectedAreas { get; set; }
     public Input _input;
 
-    public virtual void Interaction(Player player)
+    public virtual void Interaction(Player player, Game game)
     {
     }
 

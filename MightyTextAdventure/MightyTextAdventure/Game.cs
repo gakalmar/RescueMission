@@ -11,6 +11,7 @@ public class Game
     private readonly Display _display;
     public Player CurrentPlayer;
     public bool GameEnded { get; set; }
+    public bool SavedWife { get; set; }
 
     public Game()
     {
@@ -18,6 +19,7 @@ public class Game
         _input = new Input();
         _display = new Display();
         GameEnded = false;
+        SavedWife = false;
     }
 
     public void Init()
@@ -66,25 +68,29 @@ public class Game
         }
     }
 
-    public void Interact(Player player)
+    public void Interact(Player player, Game game)
     {
-        player.CurrentArea.Interaction(player);
+        player.CurrentArea.Interaction(player, game);
         
-        if (player.Inventory.Count > 0)
+        /*if (player.Inventory.Count > 0)
         {
             foreach (var item in player.Inventory)
             {
                 Console.WriteLine(item);
             }
-        }
+        }*/
     }
 
     public void HandleGameEnd()
     {
-        // if won
-        //      Do this
-        // if lost
-        //      Do this
+        if (SavedWife)
+        {
+            Console.WriteLine("You have won!");
+        }
+        else
+        {
+            Console.WriteLine("You lost!");
+        }
     }
 
     private void LoadArea()

@@ -4,40 +4,49 @@ using MightyTextAdventure.UI;
 
 public class Lagoon : Area
 {
-    public override void Interaction(Player player)
+    public override void Interaction(Player player, Game game)
     {
-        Console.WriteLine("You encountered the fairy living in the woods.");
-        Console.ReadLine();
-        Console.WriteLine("She is asking you the following riddle:");
-        Console.ReadLine();
-        Console.WriteLine("`In the heart of the woods, under the moon's pale gaze,\n" +
-                          "I dance without feet and sing without a voice.\n" +
-                          "I can be captured but never held in your hands,\n" +
-                          "I flicker with joy and vanish at dawn's first light.`");
-        Console.ReadLine();
-        Console.WriteLine("What am I?`");
-        Console.WriteLine("[1] Starlight");
-        Console.WriteLine("[2] Shadow");
-        Console.WriteLine("[3] Wind");
-        Console.WriteLine("[4] Mist");
-        
-        int input = int.Parse(_input.GetInputFromUser());
-        
-        if (input == 2)
+        if (player.Inventory.Contains("Pearl of wisdom"))
         {
-            Console.WriteLine("Congratulations, that is the correct answer!");
-            Console.ReadLine();
-            Console.WriteLine("You earned this 'Amulet of Protection'!");
-            Console.ReadLine();
-            player.Inventory.Add("Amulet of Protection");
-            Console.WriteLine("'Amulet of Protection' was added to your inventory!");
+            Console.WriteLine("You already explored this area. Let's go back to town!");
+            player.CurrentArea = player.CurrentArea.ConnectedAreas[0];
             Console.ReadLine();
         }
         else
         {
-            Console.WriteLine("I'm sorry, but that's not the right answer!");
-            Console.WriteLine("*** The fairy vanished ***");
+            Console.WriteLine("You encountered the fairy living in the woods.");
             Console.ReadLine();
+            Console.WriteLine("She is asking you the following riddle:");
+            Console.ReadLine();
+            Console.WriteLine("`In the heart of the woods, under the moon's pale gaze,\n" +
+                              "I dance without feet and sing without a voice.\n" +
+                              "I can be captured but never held in your hands,\n" +
+                              "I flicker with joy and vanish at dawn's first light.`");
+            Console.ReadLine();
+            Console.WriteLine("What am I?`");
+            Console.WriteLine("[1] Starlight");
+            Console.WriteLine("[2] Shadow");
+            Console.WriteLine("[3] Wind");
+            Console.WriteLine("[4] Mist");
+
+            int input = int.Parse(_input.GetInputFromUser());
+
+            if (input == 2)
+            {
+                Console.WriteLine("Congratulations, that is the correct answer!");
+                Console.ReadLine();
+                Console.WriteLine("You earned this 'Pearl of wisdom'!");
+                Console.ReadLine();
+                player.Inventory.Add("Pearl of wisdom");
+                Console.WriteLine("'Pearl of wisdom' was added to your inventory!");
+                Console.ReadLine();
+            }
+            else
+            {
+                Console.WriteLine("I'm sorry, but that's not the right answer!");
+                Console.WriteLine("*** The fairy vanished ***");
+                Console.ReadLine();
+            }
         }
     }
 

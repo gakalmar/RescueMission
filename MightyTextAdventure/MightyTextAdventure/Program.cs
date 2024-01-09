@@ -9,7 +9,7 @@ game.Init();
 while (game.GameEnded == false)
 {
     game.Travel();
-    game.Interact(game.CurrentPlayer);
+    game.Interact(game.CurrentPlayer, game);
 }
 game.HandleGameEnd();
 

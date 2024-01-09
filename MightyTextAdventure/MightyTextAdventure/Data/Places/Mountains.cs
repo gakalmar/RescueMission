@@ -1,44 +1,77 @@
 ﻿namespace MightyTextAdventure.Data.Places;
 using MightyTextAdventure.Data.Player;
 using MightyTextAdventure.UI;
+using MightyTextAdventure.Data;
 
 public class Mountains : Area
 {
-    public override void Interaction(Player player)
+    public override void Interaction(Player player, Game game)
     {
-        Console.WriteLine("You encountered the fairy living in the woods.");
+        Console.WriteLine("You encountered a huge dragon who kidnapped your wife." +
+                          "\nYou must defeat him to save her.");
         Console.ReadLine();
-        Console.WriteLine("She is asking you the following riddle:");
-        Console.ReadLine();
-        Console.WriteLine("`In the heart of the woods, under the moon's pale gaze,\n" +
-                          "I dance without feet and sing without a voice.\n" +
-                          "I can be captured but never held in your hands,\n" +
-                          "I flicker with joy and vanish at dawn's first light.`");
-        Console.ReadLine();
-        Console.WriteLine("What am I?`");
-        Console.WriteLine("[1] Starlight");
-        Console.WriteLine("[2] Shadow");
-        Console.WriteLine("[3] Wind");
-        Console.WriteLine("[4] Mist");
-        
-        int input = int.Parse(_input.GetInputFromUser());
-        
-        if (input == 2)
+        if (player.Inventory.Count == 3)
         {
-            Console.WriteLine("Congratulations, that is the correct answer!");
-            Console.ReadLine();
-            Console.WriteLine("You earned this 'Amulet of Protection'!");
-            Console.ReadLine();
-            player.Inventory.Add("Amulet of Protection");
-            Console.WriteLine("'Amulet of Protection' was added to your inventory!");
-            Console.ReadLine();
+            var rand = new Random();
+            int dragonHp = 10;
+            while (player.HealthPoints > 0 && dragonHp > 0)
+            {
+                int playerAttack = rand.Next(1,6);
+                dragonHp -= playerAttack;
+                Console.WriteLine("You attack the dragon...");
+                Console.WriteLine($"...and caused {playerAttack} damage");
+                if (dragonHp < 0)
+                {
+                    Console.WriteLine("The dragon has 0 HP left.");
+                }
+                else
+                {
+                    Console.WriteLine($"The dragon has {dragonHp} HP left.");
+                }
+
+                Console.ReadLine();
+                if (dragonHp > 0)
+                {
+                    int dragonAttack = rand.Next(2);
+                    player.HealthPoints -= dragonAttack;
+                    Console.WriteLine("The dragon fights back...");
+                    if (dragonAttack == 1)
+                    {
+                        Console.WriteLine($"...and you lost health");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Your amulet seems to have protected you.");
+                    }
+                    Console.WriteLine($"You have {player.HealthPoints} HP left.");
+                    Console.ReadLine();
+                }
+                
+            }
+
+            if (player.HealthPoints > 0)
+            {
+                game.GameEnded = true;
+                game.SavedWife = true;
+            }
+            else
+            {
+                game.GameEnded = true;
+            }
         }
         else
         {
-            Console.WriteLine("I'm sorry, but that's not the right answer!");
-            Console.WriteLine("*** The fairy vanished ***");
+            Console.WriteLine("You're not prepared for this fight yet." +
+                              "\nLet's keep exploring to get stronger!");
             Console.ReadLine();
+            Console.WriteLine("You go back to the town.");
+            player.CurrentArea = player.CurrentArea.ConnectedAreas[0];
         }
+            
+            
+        //int input = int.Parse(_input.GetInputFromUser());
+        
+        
     }
 
     public Mountains(string description, Input input)
