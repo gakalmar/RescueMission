@@ -35,44 +35,55 @@ public class Game
         return player;
     }
 
-    public void GoTo()
+    public void Travel()
     { 
         Console.WriteLine($"Where do you want to go next?");
-        foreach (var area in CurrentPlayer.CurrentArea.ConnectedAreas)
-        { 
-            Console.WriteLine($"{area.Description}");
+        for (int i = 0; i < CurrentPlayer.CurrentArea.ConnectedAreas.Count; i++)
+        {
+            Console.WriteLine($"[{i + 1}] {CurrentPlayer.CurrentArea.ConnectedAreas[i].Description}");
         }
-        string input = _input.GetInputFromUser();
+        
+        int input = int.Parse(_input.GetInputFromUser());
 
         bool newAreaFound = false;
         
-        foreach (var area in CurrentPlayer.CurrentArea.ConnectedAreas)
-        { 
-            if (area.Description.ToLower() == input.ToLower())
-            {
-                    CurrentPlayer.CurrentArea = area;
-                    newAreaFound = true;
-                    Console.WriteLine($"You went to the {CurrentPlayer.CurrentArea.Description}");
-            }
+        if (input <= CurrentPlayer.CurrentArea.ConnectedAreas.Count && input > 0)
+        {
+            CurrentPlayer.CurrentArea = CurrentPlayer.CurrentArea.ConnectedAreas[input-1];
+            newAreaFound = true;
+            Console.WriteLine($"You went to the {CurrentPlayer.CurrentArea.Description}");
         }
-
+        
         if (!newAreaFound)
         {
             Console.WriteLine("Invalid location, please type again.");
-            GoTo();
+            Travel();
         }
         
-        
-        
+        // foreach (var area in CurrentPlayer.CurrentArea.ConnectedAreas)
+        // { 
+        //     if (area.Description.ToLower() == input.ToLower())
+        //     {
+        //             CurrentPlayer.CurrentArea = area;
+        //             newAreaFound = true;
+        //             Console.WriteLine($"You went to the {CurrentPlayer.CurrentArea.Description}");
+        //     }
+        // }
+        //
+        // if (!newAreaFound)
+        // {
+        //     Console.WriteLine("Invalid location, please type again.");
+        //     Travel();
+        // }
     }
 
     private void LoadArea()
     {
-        _areas[0] = new Area("Town");
-        _areas[1] = new Area("Woods");
-        _areas[2] = new Area("Lake");
-        _areas[3] = new Area("Desert");
-        _areas[4] = new Area("Mountain");
+        _areas[0] = new Town("Meadowbrook");
+        _areas[1] = new Ruins("Ravenrock Ruins");
+        _areas[2] = new Lagoon("Lavender Lagoon");
+        _areas[3] = new Woods("Whispering Woods");
+        _areas[4] = new Mountains("Mystic Mountains");
     
         _areas[0].ConnectedAreas.Add(_areas[1]);
         _areas[0].ConnectedAreas.Add(_areas[2]);
@@ -83,6 +94,13 @@ public class Game
         _areas[2].ConnectedAreas.Add(_areas[0]);
         _areas[3].ConnectedAreas.Add(_areas[0]);
         _areas[4].ConnectedAreas.Add(_areas[0]);
+        
+        // Console.WriteLine(_areas[1].Description);
+        // _areas[0].Interaction();
+        // _areas[1].Interaction();
+        // _areas[2].Interaction();
+        // _areas[3].Interaction();
+        // _areas[4].Interaction();
         
     }
     
