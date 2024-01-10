@@ -25,19 +25,16 @@ public class Game
     public void Init()
     {
         LoadArea();
-        CurrentPlayer = CreatePlayer();
-        Console.WriteLine($"{CurrentPlayer.Name} was created!");
+        GameIntro();
         Console.ReadLine();
-        Console.WriteLine(CurrentPlayer.Description);       // Update and add it to intro text
-        Console.ReadLine();
-        _display.PrintMessage("Start Area");
+        _display.PrintMessage($"{CurrentPlayer.Name} is currently standing at the gates of Meadowbrook, trying to decide where to go next.");
     }
     
     //create player
     public Player CreatePlayer()
     {
         Console.Write("Enter the name of your hero: ");
-        Player player = new Player(_input.GetInputFromUser(), _areas[0]);
+        Player player = new Player(_input.GetInputFromUser(CurrentPlayer), _areas[0]);
         return player;
     }
 
@@ -49,7 +46,7 @@ public class Game
             Console.WriteLine($"[{i + 1}] {CurrentPlayer.CurrentArea.ConnectedAreas[i].Description}");
         }
         
-        int input = int.Parse(_input.GetInputFromUser());
+        int input = int.Parse(_input.GetInputFromUser(CurrentPlayer));
 
         bool newAreaFound = false;
         
@@ -81,21 +78,39 @@ public class Game
         }*/
     }
 
+    public void GameIntro()
+    {
+        Console.WriteLine("As dawn breaks in the idyllic town of Meadowbrook,\n" +
+                          "you awaken in the cozy embrace of your home.\n" +
+                          "You had a long night in the pub, your record still left unbroken.\n" +
+                          "The morning sun paints a golden hue across the tranquil meadows outside.\n" +
+                          $"However, a sense of unease grips {CurrentPlayer.Name} as they realize their wife is nowhere to be found.\n" +
+                          $"Once a seasoned adventurer, {CurrentPlayer.Name} had settled into a peaceful life in this quaint town.\n" +
+                          "Now, a mysterious journey awaits as they begin their search for answers,\n" +
+                          "their once-peaceful existence disrupted by the unsettling disappearance of their beloved spouse.");
+        CurrentPlayer = CreatePlayer();
+        Console.WriteLine($"The hero is now named {CurrentPlayer.Name}!");
+        Console.WriteLine(CurrentPlayer.Description);
+    }
+
     public void HandleGameEnd()
     {
         if (SavedWife)
         {
-            Console.WriteLine("You have won!");
+            Console.WriteLine($"With a final roar, the dragon falls, defeated before {CurrentPlayer.Name}'s unwavering courage!");
+            Console.WriteLine($"{CurrentPlayer.Name} has not only saved his wife but also proven himself as a legendary hero.");
+            Console.WriteLine($"Meadowbrook celebrates the victory, and {CurrentPlayer.Name} and his wife live happily ever after.");
         }
         else
         {
-            Console.WriteLine("You lost!");
+            Console.WriteLine($"{CurrentPlayer.Name} fought bravely against the mighty dragon, but its power proved overwhelming.");
+            Console.WriteLine($"As the final moments unfold, {CurrentPlayer.Name}'s thoughts linger on his beloved wife.");
+            Console.WriteLine("A valiant effort, though fate had other plans for this brave adventurer.");
         }
     }
 
     private void LoadArea()
     {
-        // Input inp = new Input();
         _areas[0] = new Town("Meadowbrook", _input);
         _areas[1] = new Ruins("Ravenrock Ruins", _input);
         _areas[2] = new Lagoon("Lavender Lagoon", _input);

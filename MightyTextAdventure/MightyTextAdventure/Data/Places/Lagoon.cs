@@ -5,50 +5,53 @@ using MightyTextAdventure.UI;
 public class Lagoon : Area
 {
     public override void Interaction(Player player, Game game)
+{
+    if (player.Inventory.Contains("Pearl of Wisdom"))
     {
-        if (player.Inventory.Contains("Pearl of wisdom"))
+        Console.WriteLine($"{player.Name}, you've already explored this serene lagoon. Let's return to the bustling town!");
+        player.CurrentArea = player.CurrentArea.ConnectedAreas[0];
+        Console.ReadLine();
+    }
+    else
+    {
+        Console.WriteLine($"{player.Name} stands at the edge of Lavender Lagoon, where tranquil waters mirror the setting sun's hues.");
+        Console.WriteLine($"The lavender coloured sky paints the water, and dragonflies add to the enchantment.");
+        Console.WriteLine($"A water sprite appears in front of {player.Name}");
+        Console.ReadLine();
+        Console.WriteLine($"The water sprite poses a riddle for you to ponder:");
+        Console.ReadLine();
+        Console.WriteLine("`In quiet ponds or oceans deep,\n" +
+                          "My presence felt in waters' sweep.\n" +
+                          "A subtle pulse, a gentle sway,\n" +
+                          "A liquid dance in light of day.`");
+        Console.ReadLine();
+        Console.WriteLine("What am I?");
+        Console.WriteLine("[1] Moonbeam");
+        Console.WriteLine("[2] Ripple");
+        Console.WriteLine("[3] Seashell");
+        Console.WriteLine("[4] Misty Veil");
+
+        int input = int.Parse(_input.GetInputFromUser(player));
+
+        if (input == 2)
         {
-            Console.WriteLine("You already explored this area. Let's go back to town!");
-            player.CurrentArea = player.CurrentArea.ConnectedAreas[0];
+            Console.WriteLine($"Congratulations, {player.Name}, that's the correct answer!");
+            Console.ReadLine();
+            Console.WriteLine($"{player.Name} has earned the 'Seashell of Wisdom'!");
+            Console.ReadLine();
+            player.Inventory.Add("Pearl of Wisdom");
+            Console.WriteLine($"'Pearl of Wisdom' has been added to {player.Name}'s inventory!");
             Console.ReadLine();
         }
         else
         {
-            Console.WriteLine("You encountered the fairy living in the woods.");
+            Console.WriteLine($"Alas, {player.Name}, the waves of truth elude us. That wasn't the answer dancing upon the water's surface.");
+            Console.WriteLine("*** The water sprite gracefully disappears into the lagoon ***");
             Console.ReadLine();
-            Console.WriteLine("She is asking you the following riddle:");
-            Console.ReadLine();
-            Console.WriteLine("`In the heart of the woods, under the moon's pale gaze,\n" +
-                              "I dance without feet and sing without a voice.\n" +
-                              "I can be captured but never held in your hands,\n" +
-                              "I flicker with joy and vanish at dawn's first light.`");
-            Console.ReadLine();
-            Console.WriteLine("What am I?`");
-            Console.WriteLine("[1] Starlight");
-            Console.WriteLine("[2] Shadow");
-            Console.WriteLine("[3] Wind");
-            Console.WriteLine("[4] Mist");
-
-            int input = int.Parse(_input.GetInputFromUser());
-
-            if (input == 2)
-            {
-                Console.WriteLine("Congratulations, that is the correct answer!");
-                Console.ReadLine();
-                Console.WriteLine("You earned this 'Pearl of wisdom'!");
-                Console.ReadLine();
-                player.Inventory.Add("Pearl of wisdom");
-                Console.WriteLine("'Pearl of wisdom' was added to your inventory!");
-                Console.ReadLine();
-            }
-            else
-            {
-                Console.WriteLine("I'm sorry, but that's not the right answer!");
-                Console.WriteLine("*** The fairy vanished ***");
-                Console.ReadLine();
-            }
         }
     }
+}
+
 
     public Lagoon(string description, Input input)
     {

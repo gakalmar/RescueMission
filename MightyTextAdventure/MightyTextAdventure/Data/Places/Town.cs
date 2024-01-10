@@ -7,12 +7,12 @@ public class Town : Area
     public override void Interaction(Player player, Game game)
     {
         Console.WriteLine($"You're back in {player.CurrentArea.Description}." +
-                          $"\nWhat would you like to do now?");
+                          $"What would you like to do now?");
         Console.WriteLine("[1] Sleep");
         Console.WriteLine("[2] Go to pub");
         Console.WriteLine("[3] Eat");
         
-        int input = int.Parse(_input.GetInputFromUser());
+        int input = int.Parse(_input.GetInputFromUser(player));
 
         switch (input)
         {
