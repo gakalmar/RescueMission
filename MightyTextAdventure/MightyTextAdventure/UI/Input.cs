@@ -4,6 +4,7 @@ namespace MightyTextAdventure.UI;
 
 public class Input
 {
+    public Display _display = new Display();
     public string GetInputFromUser(Player player)
         {
             while (true)
@@ -26,28 +27,27 @@ public class Input
         } 
     private void PrintGameControls()
     {
-        Console.WriteLine("Game Controls:");
-        Console.WriteLine("- Enter the corresponding number to make a choice.");
-        Console.WriteLine("- Type 'i' to check your inventory.");
-        Console.WriteLine("- Type 'h' or 'help' to display this help message.");
-        //Console.WriteLine("- Press 'Enter' to go back to choices!");
-
+        _display.AddSeparatorLine();
+        _display.PrintMessage($"Game Controls:");
+        _display.PrintMessage($"- Enter the corresponding number to make a choice.");
+        _display.PrintMessage($"- Type 'i' to check your inventory.");
+        _display.PrintMessage($"- Type 'h' or 'help' to display this help message.");
     }
 
     private void CheckInventory(Player player)
     {
         if (player.Inventory.Count > 0)
         {
-            Console.WriteLine("You have the following items in your bag:");
+            _display.AddSeparatorLine();
+            _display.PrintMessage($"You have the following items in your bag:");
             foreach (var item in player.Inventory)
             {
-                Console.WriteLine($"- {item}");
+                _display.PrintMessage($"- {item}");
             }
         }
         else
         {
-            Console.WriteLine("Your bag is empty.");
-            //Console.WriteLine("- Press 'Enter' to go back to choices!");
+            _display.PrintMessage($"Your bag is empty.");
         }
     }
 }
