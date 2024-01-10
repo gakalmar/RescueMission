@@ -50,8 +50,15 @@ public class Game
     
     public Player CreatePlayer()
     {
+        
         _display.PrintSameLineMessage($"Enter the name of your hero: ");
         Player player = new Player(_input.GetInputFromUser(CurrentPlayer), _areas[0]);
+        while (string.IsNullOrEmpty(player.Name))
+        {
+            _display.PrintMessage("Every great adventurer needs a name!");
+            _display.PrintSameLineMessage($"Enter the name of your hero: ");
+            player = new Player(_input.GetInputFromUser(CurrentPlayer), _areas[0]);
+        }
 
         _display.PrintSameLineMessage($"Enter the gender of your hero: [m/f] ");
         string gender = _input.GetInputFromUser(player);
@@ -74,7 +81,17 @@ public class Game
             _display.PrintMessage($"[{i + 1}] {CurrentPlayer.CurrentArea.ConnectedAreas[i].Description}");
         }
         
-        int input = int.Parse(_input.GetInputFromUser(CurrentPlayer));
+        string userInput;
+        do
+        {
+            userInput = _input.GetInputFromUser(CurrentPlayer);
+            if(!int.TryParse(userInput, out int noInput))
+            {
+                _display.PrintMessage($"{userInput} is not a valid choice. Please pick a number from the list!");
+            }
+        } while (!int.TryParse(userInput, out int reInput));
+            
+        int input = int.Parse(userInput);
 
         bool newAreaFound = false;
         
@@ -105,13 +122,13 @@ public class Game
         if (SavedWife)
         {
             _display.PrintMessage($"With a final roar, the dragon falls, defeated before {CurrentPlayer.Name}'s unwavering courage!");
-            _display.PrintMessage($"{CurrentPlayer.Name} has not only saved his wife but also proven himself as a legendary hero.");
-            _display.PrintMessage($"Meadowbrook celebrates the victory, and {CurrentPlayer.Name} and his wife live happily ever after.");
+            _display.PrintMessage($"{CurrentPlayer.Name} has not only saved his/her love but also proven himself as a legendary hero.");
+            _display.PrintMessage($"Meadowbrook celebrates the victory, and {CurrentPlayer.Name} and his/her spouse live happily ever after.");
         }
         else
         {
             _display.PrintMessage($"{CurrentPlayer.Name} fought bravely against the mighty dragon, but its power proved overwhelming.");
-            _display.PrintMessage($"As the final moments unfold, {CurrentPlayer.Name}'s thoughts linger on his beloved wife.");
+            _display.PrintMessage($"As the final moments unfold, {CurrentPlayer.Name}'s thoughts linger on his/her beloved.");
             _display.PrintMessage($"A valiant effort, though fate had other plans for this brave adventurer.");
         }
     }

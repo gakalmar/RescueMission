@@ -5,12 +5,24 @@ namespace MightyTextAdventure.UI;
 public class Input
 {
     public Display _display = new Display();
+    /*public bool IsNumeric(string input)
+    {
+        return int.TryParse(input, out _);
+    }*/
     public string GetInputFromUser(Player player)
         {
             while (true)
             {
                 string input = Console.ReadLine();
-
+                
+                /*if (IsNumeric(input))
+                {
+                    return input;
+                }*/
+                if (string.IsNullOrEmpty(input))
+                {
+                    _display.PrintMessage("Type your choice before hitting 'Enter'!");
+                }
                 if (input.ToLower() == "h" || input.ToLower() == "help")
                 {
                     PrintGameControls();
@@ -50,4 +62,5 @@ public class Input
             _display.PrintMessage($"Your bag is empty.");
         }
     }
+    
 }

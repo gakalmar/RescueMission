@@ -30,9 +30,19 @@ public class Lagoon : Area
             _display.PrintMessage($"[2] Ripple");
             _display.PrintMessage($"[3] Seashell");
             _display.PrintMessage($"[4] Misty Veil");
-    
-            int input = int.Parse(_input.GetInputFromUser(player));
-    
+
+            string userInput;
+            do
+            {
+                userInput = _input.GetInputFromUser(player);
+                if(!int.TryParse(userInput, out int noInput))
+                {
+                    _display.PrintMessage($"{userInput} is not a valid choice. Please pick a number from the list!");
+                }
+            } while (!int.TryParse(userInput, out int reInput));
+            
+            int input = int.Parse(userInput);
+            
             if (input == 2)
             {
                 _display.PrintMessage($"Congratulations, {player.Name}, that's the correct answer!");

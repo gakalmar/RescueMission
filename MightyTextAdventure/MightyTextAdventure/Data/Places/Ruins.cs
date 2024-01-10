@@ -31,7 +31,17 @@ public class Ruins : Area
             _display.PrintMessage($"[3] Zephyr");
             _display.PrintMessage($"[4] Dust Devil");
     
-            int input = int.Parse(_input.GetInputFromUser(player));
+            string userInput;
+            do
+            {
+                userInput = _input.GetInputFromUser(player);
+                if(!int.TryParse(userInput, out int noInput))
+                {
+                    _display.PrintMessage($"{userInput} is not a valid choice. Please pick a number from the list!");
+                }
+            } while (!int.TryParse(userInput, out int reInput));
+            
+            int input = int.Parse(userInput);
     
             if (input == 1)
             {
