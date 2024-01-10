@@ -1,7 +1,11 @@
 ﻿using MightyTextAdventure;
-using MightyTextAdventure.Data.Player;
+using MightyTextAdventure.UI;
 
-Console.WriteLine("Starting Mighty Text Adventure!");
+Display _display = new Display();
+
+_display.AddSeparatorLine();
+_display.PrintMessage($"Starting Mighty Text Adventure!");
+_display.AddSeparatorLine();
 
 var game = new Game();
 
@@ -13,4 +17,6 @@ while (game.GameEnded == false)
 }
 game.HandleGameEnd();
 
-Console.WriteLine("Exiting from Mighty Text Adventure!");
+_display.AddSeparatorLine();
+_display.PrintMessage($"Exiting from Mighty Text Adventure!");
+_display.AddSeparatorLine();
