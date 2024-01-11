@@ -9,7 +9,7 @@ public class Mountains : Area
     {
         _display.PrintMessage($"Venturing into the mountains, {player.Name} hears an ominous roar,\n" +
                               $"{player.Name} will need 'everything what it takes' to face this monster!");
-        Console.ReadLine(); 
+        _input.WaitForEnter();
         if (player.Inventory.Count == 3)
             {
                 var rand = new Random();
@@ -37,7 +37,7 @@ public class Mountains : Area
                         _display.PrintMessage($"The dragon has {dragonHp} HP remaining.");
                     }
 
-                    Console.ReadLine();
+                    _input.WaitForEnter();
 
                     if (dragonHp > 0)
                     {
@@ -56,7 +56,7 @@ public class Mountains : Area
                         }
 
                         _display.PrintMessage($"{player.Name} now has {player.HealthPoints} HP remaining.");
-                        Console.ReadLine();
+                        _input.WaitForEnter();
                     }
                 }
                 if (player.HealthPoints > 0)
@@ -85,7 +85,7 @@ public class Mountains : Area
         {
             _display.PrintMessage($"You sense the dragon's presence but realize you're not prepared for this battle yet.");
             _display.PrintMessage($"Let's continue exploring to grow stronger!");
-            Console.ReadLine();
+            _input.WaitForEnter();
             _display.PrintMessage($"You return to the safety of the town.");
             player.CurrentArea = player.CurrentArea.ConnectedAreas[0];
         }
