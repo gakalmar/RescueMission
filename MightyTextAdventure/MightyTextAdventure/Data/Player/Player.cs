@@ -16,7 +16,7 @@ public class Player
         Inventory = new List<string> ();
         CurrentArea = currentArea;
         Description = $"{name} is now the hero of our story. A brave warrior, ready to take on the world!";
-        HealthPoints = 5;
+        HealthPoints = 3;
         Gender = "";
         BeerRecord = 4;
     }
