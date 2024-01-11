@@ -27,7 +27,7 @@ public class Game
         CurrentPlayer = CreatePlayer();
         _display.AddSeparatorLine();
         _display.PrintMessage(CurrentPlayer.Description);
-        Console.ReadLine();
+        _input.WaitForEnter();
         _display.AddSeparatorLine();
         _display.PrintMessage($"As dawn breaks in the idyllic town of Meadowbrook,\n" +
                               $"{CurrentPlayer.Name} awakens in the cozy embrace of {(CurrentPlayer.Gender == "m" ? "his" : "her")} home.\n" +
@@ -44,7 +44,7 @@ public class Game
     {
         LoadAreas();
         GameIntro();
-        Console.ReadLine();
+        _input.WaitForEnter();
         _display.PrintMessage($"{CurrentPlayer.Name} is currently standing at the gates of Meadowbrook, trying to decide where to go next.");
     }
     
@@ -76,23 +76,34 @@ public class Game
     public void Travel()
     { 
         _display.PrintMessage($"Where do you want to go next?");
-        for (int i = 0; i < CurrentPlayer.CurrentArea.ConnectedAreas.Count; i++)
+        if (CurrentPlayer.CurrentArea.Description == _areas[0].Description) //if in town
         {
-            _display.PrintMessage($"[{i + 1}] {CurrentPlayer.CurrentArea.ConnectedAreas[i].Description}");
+            _display.PrintMessage($"[0] Stay in Town");
+            for (int i = 0; i < CurrentPlayer.CurrentArea.ConnectedAreas.Count; i++)
+            {
+                _display.PrintMessage($"[{i + 1}] {CurrentPlayer.CurrentArea.ConnectedAreas[i].Description}");
+            }
+            _display.PrintMessage($"[h] Display controls");
+        }
+        else
+        {
+            _display.PrintMessage($"[0] Camp in the wild!");
+            for (int i = 0; i < CurrentPlayer.CurrentArea.ConnectedAreas.Count; i++)
+            {
+                _display.PrintMessage($"[{i + 1}] {CurrentPlayer.CurrentArea.ConnectedAreas[i].Description}");
+            }
+            _display.PrintMessage($"[h] Display controls");
         }
         
-        string userInput;
-        do
+        // Check if input is a number:
+        int input;
+        bool isNumber = _input.CheckIfNumber(CurrentPlayer, out int parsedNum);
+        if (isNumber);
         {
-            userInput = _input.GetInputFromUser(CurrentPlayer);
-            if(!int.TryParse(userInput, out int noInput))
-            {
-                _display.PrintMessage($"{userInput} is not a valid choice. Please pick a number from the list!");
-            }
-        } while (!int.TryParse(userInput, out int reInput));
-            
-        int input = int.Parse(userInput);
+            input = parsedNum;
+        }
 
+        // Check if input is in the range of possible answers:
         bool newAreaFound = false;
         
         if (input <= CurrentPlayer.CurrentArea.ConnectedAreas.Count && input > 0)
@@ -100,14 +111,23 @@ public class Game
             CurrentPlayer.CurrentArea = CurrentPlayer.CurrentArea.ConnectedAreas[input-1];
             newAreaFound = true;
             _display.AddSeparatorLine();
-            _display.PrintMessage($"You went to the {CurrentPlayer.CurrentArea.Description}");
+            _display.PrintMessage($"You traveled to {CurrentPlayer.CurrentArea.Description}");
             _display.AddSeparatorLine();
+            _input.WaitForEnter();
+        } 
+        else if (input == 0)
+        {
+            newAreaFound = true;
+            _display.AddSeparatorLine();
+            _display.PrintMessage($"You decided to stay in {CurrentPlayer.CurrentArea.Description} for another night.");
+            _display.AddSeparatorLine();
+            _input.WaitForEnter();
         }
         
         if (!newAreaFound)
         {
             _display.PrintMessage($"Invalid location, please try again.");
-            Console.ReadLine();
+            _input.WaitForEnter();
             Travel();
         }
     }
