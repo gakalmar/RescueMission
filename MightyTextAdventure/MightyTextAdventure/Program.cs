@@ -4,7 +4,7 @@ using MightyTextAdventure.UI;
 Display _display = new Display();
 
 _display.AddSeparatorLine();
-_display.PrintMessage($"Starting Mighty Text Adventure!");
+_display.PrintMessage($"Rescue Mission is Starting!");
 _display.AddSeparatorLine();
 
 var game = new Game();
@@ -18,5 +18,5 @@ while (game.GameEnded == false)
 game.HandleGameEnd();
 
 _display.AddSeparatorLine();
-_display.PrintMessage($"Exiting from Mighty Text Adventure!");
+_display.PrintMessage($"Rescue Mission Ended!");
 _display.AddSeparatorLine();
