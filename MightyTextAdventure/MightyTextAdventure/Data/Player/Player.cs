@@ -8,6 +8,7 @@ public class Player
     public string Description { get; set; }
     public int HealthPoints { get; set; }
     public string Gender { get; set; }
+    public int BeerRecord { get; set; }
 
     public Player(string name, Area currentArea )
     {
@@ -17,6 +18,7 @@ public class Player
         Description = $"{name} is now the hero of our story. A brave warrior, ready to take on the world!";
         HealthPoints = 5;
         Gender = "";
+        BeerRecord = 4;
     }
     public override string ToString()
     {

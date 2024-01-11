@@ -41,8 +41,9 @@ public class Town : Area
                 _display.AddSeparatorLine();
                 break;
             case 2:
+                player.BeerRecord++;
                 _display.AddSeparatorLine();
-                _display.PrintMessage($"New record: 8 beers! Wow!");
+                _display.PrintMessage($"New record: {player.BeerRecord} beers! Wow!");
                 _input.WaitForEnter();
                 _display.PrintMessage($"Suddenly you notice something odd in the air...");
                 _input.WaitForEnter();
