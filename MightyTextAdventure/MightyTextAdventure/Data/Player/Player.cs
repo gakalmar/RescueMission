@@ -14,7 +14,7 @@ public class Player
         Name = name;
         Inventory = new List<string> ();
         CurrentArea = currentArea;
-        Description = $"{name} is now the hero of our story. A brave warrior, who is ready to take on the world to save his/her beloved one.";
+        Description = $"{name} is now the hero of our story. A brave warrior, ready to take on the world!";
         HealthPoints = 5;
         Gender = "";
     }
