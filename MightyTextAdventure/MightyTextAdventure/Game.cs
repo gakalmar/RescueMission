@@ -141,15 +141,17 @@ public class Game
     {
         if (SavedWife)
         {
-            _display.PrintMessage($"With a final roar, the dragon falls, defeated before {CurrentPlayer.Name}'s unwavering courage!");
+            _display.PrintMessage($"Roaring in pain, the dragon falls, defeated before {CurrentPlayer.Name}'s unwavering courage!");
             _display.PrintMessage($"{CurrentPlayer.Name} has not only saved his/her love but also proven himself as a legendary hero.");
             _display.PrintMessage($"Meadowbrook celebrates the victory, and {CurrentPlayer.Name} and his/her spouse live happily ever after.");
+            _input.WaitForEnter();
         }
         else
         {
             _display.PrintMessage($"{CurrentPlayer.Name} fought bravely against the mighty dragon, but its power proved overwhelming.");
             _display.PrintMessage($"As the final moments unfold, {CurrentPlayer.Name}'s thoughts linger on his/her beloved.");
             _display.PrintMessage($"A valiant effort, though fate had other plans for this brave adventurer.");
+            _input.WaitForEnter();
         }
     }
 
