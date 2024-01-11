@@ -10,7 +10,7 @@ public class Woods : Area
         {
             _display.PrintMessage($"You already explored this area. Let's go back to town!");
             player.CurrentArea = player.CurrentArea.ConnectedAreas[0];
-            Console.ReadLine();
+            _input.WaitForEnter();
         }
         else
         {
@@ -20,47 +20,49 @@ public class Woods : Area
                                   $" melody as {player.Name} explores this mystical and serene woodland.");
             _display.PrintMessage($"Amidst the woodland glade, you encounter a playful fairy, " +
                                   "gracefully dwelling in the heart of the woods.");
-            Console.ReadLine();
+            _input.WaitForEnter();
             _display.PrintMessage($"She suddenly appears in front of you and asks you the following riddle:");
-            Console.ReadLine();
+            _input.WaitForEnter();
             _display.PrintMessage($"`In the heart of the woods, under the moon's pale gaze,\n" +
                                   "I dance without feet and sing without a voice.\n" +
                                   "I can be captured but never held in your hands,\n" +
                                   "I flicker with joy and vanish at dawn's first light.`");
-            Console.ReadLine();
+            _input.WaitForEnter();
             _display.PrintMessage($"What am I?`");
             _display.PrintMessage($"[1] Starlight");
-            _display.PrintMessage($"[2] Shadow");
-            _display.PrintMessage($"[3] Wind");
+            _display.PrintMessage($"[2] Wind");
+            _display.PrintMessage($"[3] Shadow");
             _display.PrintMessage($"[4] Mist");
-
-            string userInput;
-            do
-            {
-                userInput = _input.GetInputFromUser(player);
-                if(!int.TryParse(userInput, out int noInput))
-                {
-                    _display.PrintMessage($"{userInput} is not a valid choice. Please pick a number from the list!");
-                }
-            } while (!int.TryParse(userInput, out int reInput));
             
-            int input = int.Parse(userInput);
-
-            if (input == 2)
+            // Check if input is a number:
+            int input;
+            if (_input.CheckIfNumber(player, out int parsedNum));
+            {
+                input = parsedNum;
+            }
+            
+            // Correct answer:
+            if (input == 3)
             {
                 _display.PrintMessage($"Congratulations, that is the correct answer!");
-                Console.ReadLine();
+                _input.WaitForEnter();
                 _display.PrintMessage($"You earned this 'Woodland Ward Amulet'!");
-                Console.ReadLine();
+                _input.WaitForEnter();
                 player.Inventory.Add( "Woodland Ward Amulet");
                 _display.PrintMessage($"'Woodland Ward Amulet' was added to your inventory!");
-                Console.ReadLine();
+                _input.WaitForEnter();
             }
-            else
+            else if (input == 1 || input == 2 || input == 4)
             {
                 _display.PrintMessage($"Ah, my dear traveler, that's not the answer that flutters through the enchanted glades!");
                 _display.PrintMessage($"*** The fairy dissolves into the whispers of the ancient trees.***");
-                Console.ReadLine();
+                _input.WaitForEnter();
+            }
+            else
+            {
+                _display.PrintMessage($"Ah, my dear traveler, you missed your opportunity to answer correctly!");
+                _display.PrintMessage($"*** The fairy dissolves into the whispers of the ancient trees.***");
+                _input.WaitForEnter();
             }
         }
     }
