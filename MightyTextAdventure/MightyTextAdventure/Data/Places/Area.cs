@@ -4,8 +4,8 @@ using MightyTextAdventure.Data.Player;
 
 public abstract class Area
 {
-    public Input _input;
-    public Display _display;
+    protected Input _input;
+    protected Display _display;
     public string Description { get; set; }
     public List<Area> ConnectedAreas { get; set; }
 
